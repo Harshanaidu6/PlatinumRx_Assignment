@@ -1,4 +1,25 @@
+# PlatinumRx Assignment
 
+This repository contains my complete submission for the PlatinumRx Assignment, including SQL scripts, Python scripts, and Spreadsheet-based analysis.
+
+---
+
+## 📁 Repository Structure
+
+PlatinumRx_Assignment/
+│
+├── SQL/
+│ ├── hotel_system.sql
+│ ├── clinic_system.sql
+│
+├── Python/
+│ ├── 01_Time_Converter.py
+│ └── 02_Remove_Duplicates.py
+│
+├── Spreadsheet/
+│ └── Tickets_Feedbacks.xlsx (or Tickets_Feedbacks_with_formulas.xlsx)
+│
+└── README.md
 ---
 
 ## 🧠 Phase 1 — SQL Proficiency
