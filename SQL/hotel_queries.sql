@@ -46,7 +46,8 @@ JOIN bookings b ON bl.booking_id = b.booking_id
 JOIN booking_items bi ON b.booking_id = bi.booking_id
 WHERE bl.bill_date BETWEEN '2021-10-01' AND '2021-10-31'
 GROUP BY bl.bill_id
-HAVING bill_amount > 1000;
+HAVING SUM(bi.quantity * bi.rate) > 1000;
+
 
 
 
