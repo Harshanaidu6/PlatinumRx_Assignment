@@ -1,17 +1,30 @@
--- Q1: For every user, get last booked room
+/* ============================================================
+   HOTEL MANAGEMENT SYSTEM – SQL ANSWERS (MySQL)
+   ============================================================ */
+
+
+/* ============================================================
+   Q1. For every user, get user_id and last booked room_no
+   ============================================================ */
 SELECT user_id, room_no
 FROM (
     SELECT 
         user_id,
         room_no,
         booking_date,
-        ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY booking_date DESC) AS rn
+        ROW_NUMBER() OVER (
+            PARTITION BY user_id 
+            ORDER BY booking_date DESC
+        ) AS rn
     FROM bookings
-) t
+) AS t
 WHERE rn = 1;
 
 
--- Q2: Booking_id and total billing amount for bookings in November 2021
+
+/* ============================================================
+   Q2. Booking_id and total billing amount for bookings in Nov 2021
+   ============================================================ */
 SELECT 
     b.booking_id,
     SUM(bi.quantity * bi.rate) AS total_amount
@@ -21,7 +34,10 @@ WHERE b.booking_date BETWEEN '2021-11-01' AND '2021-11-30'
 GROUP BY b.booking_id;
 
 
--- Q3: Bills in October 2021 with amount > 1000
+
+/* ============================================================
+   Q3. Bills created in Oct 2021 where bill amount > 1000
+   ============================================================ */
 SELECT 
     bl.bill_id,
     SUM(bi.quantity * bi.rate) AS bill_amount
@@ -33,7 +49,10 @@ GROUP BY bl.bill_id
 HAVING bill_amount > 1000;
 
 
--- Q4: Most and least ordered item per month for 2021
+
+/* ============================================================
+   Q4. Most & least ordered item for each month in 2021
+   ============================================================ */
 WITH monthly_data AS (
     SELECT 
         DATE_FORMAT(b.booking_date, '%Y-%m-01') AS month_start,
@@ -49,7 +68,7 @@ WITH monthly_data AS (
 ranked AS (
     SELECT *,
         ROW_NUMBER() OVER (PARTITION BY month_start ORDER BY qty DESC) AS most_rn,
-        ROW_NUMBER() OVER (PARTITION BY month_start ORDER BY qty ASC) AS least_rn
+        ROW_NUMBER() OVER (PARTITION BY month_start ORDER BY qty ASC)  AS least_rn
     FROM monthly_data
 )
 SELECT month_start, item_id, item_name, qty, 'MOST_ORDERED' AS type
@@ -62,7 +81,10 @@ WHERE least_rn = 1
 ORDER BY month_start, type;
 
 
--- Q5: Second highest bill per month for 2021
+
+/* ============================================================
+   Q5. Customers with second-highest bill value each month (2021)
+   ============================================================ */
 WITH bill_amounts AS (
     SELECT 
         bl.bill_id,
@@ -84,4 +106,3 @@ SELECT month_start, user_id, bill_id, bill_amount
 FROM ranked
 WHERE rnk = 2
 ORDER BY month_start;
-
