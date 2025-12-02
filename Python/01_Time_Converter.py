@@ -1,10 +1,9 @@
-def convert_minutes(total_minutes):
-    hours = total_minutes // 60
-    minutes = total_minutes % 60
+# User input
+minutes = int(input("Enter minutes: "))
 
-    if hours > 1:
-        hour_text = f"{hours} hrs"
-    else:
-        hour_text = f"{hours} hr"
+# Logic 
+hours = minutes // 60
+remaining_minutes = minutes % 60
 
-    return f"{hour_text} {minutes} minutes"
+# Print output
+print(hours, "hrs", remaining_minutes, "minutes")
